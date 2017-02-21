@@ -1,0 +1,16 @@
+﻿DROP TABLE IF EXISTS car;
+CREATE TABLE car(
+ id SERIAL PRIMARY KEY,
+ model VARCHAR,
+ make VARCHAR,
+ id_engine INTEGER,
+ price INTEGER
+);
+
+
+DROP TABLE IF EXISTS engine;
+CREATE TABLE engine(
+ id SERIAL PRIMARY KEY,
+ displacement DOUBLE PRECISION,
+ power INTEGER
+ )
