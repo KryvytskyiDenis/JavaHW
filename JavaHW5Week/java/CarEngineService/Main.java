@@ -26,8 +26,8 @@ public class Main {
     public static void main(String[] args) {
         //Добавим 3 двигателя
         Engine engine1 = addEngine(1, 5.2, 610);
-        Engine engine2 =addEngine(2, 3.6, 400);
-        Engine engine3 =addEngine(3, 2.5, 300);
+        Engine engine2 = addEngine(2, 3.6, 400);
+        Engine engine3 = addEngine(3, 2.5, 300);
 
         //Добавим автомобили
         addCar(1, "Bmw i8", "Bmw", engine1, 141700);
@@ -44,17 +44,11 @@ public class Main {
         }
 
         //Выводим на экран какие двигатели в каких авто используются
-        Set<Car> cars;
 
-        cars = engine1.getSetCars();
-        System.out.println("Двигатель с индексом " + engine1.getId() + " установлен в автомобили:\n" + cars);
-
-        cars = engine2.getSetCars();
-        System.out.println("Двигатель с индексом " + engine2.getId() + " установлен в автомобили:\n" + cars);
-
-        cars = engine3.getSetCars();
-        System.out.println("Двигатель с индексом " + engine3.getId() + " установлен в автомобили:\n" + cars);
-
+        for (int i = 1; i <= 3 ; i++) {
+            Engine engine = worker.getEngineById(i);
+            System.out.println("Двигатель с индексом " + engine.getId() + " установлен в автомобили:\n" + engine.getSetCars());
+        }
 
         //Закрываем обьекты Connection, Statement, ResultSet и PreparedStatement
         worker.getResultSet();

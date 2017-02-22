@@ -19,7 +19,7 @@ public class DBWorker {
     private final String INSERT_ENGINE = "INSERT INTO engine(id, displacement, power) VALUES(?, ?, ?)";
     private final String GET_CAR_BY_ID = "SELECT * FROM car WHERE id = " ;
     private final String GET_ENGINE_BY_ID = "SELECT * FROM engine WHERE id = ";
-    private final String GET_CAR_BY_ID_ENGINE = "SELECT c.id, c.model, c.make, c.price FROM car c WHERE id_engine = ";
+    private final String GET_CAR_BY_ID_ENGINE = "SELECT * FROM car WHERE id_engine = ";
 
     public DBWorker(){
         try {
@@ -32,14 +32,13 @@ public class DBWorker {
 
     //главный метод получения авто по id и заполнение поля Engine. Возвращает объект типа Car
     public Car getCarById(int id){
-        Car car;//обьект который будет содержать полученные данные
 
-        car = justGetCarById(id);//получаем авто по id из БД
+        Car car = justGetCarById(id);
 
         return car;
     }
 
-    //вспомогательный метод для получения авто. Вызывается из метода getCarById
+    //вспомогательный метод. Получаем объект типа Car и заполняем поле Engine. Вызывается из метода getCarById
     private Car justGetCarById(int id){
         Car car = new Car(0, "", "", null, 0);
 
@@ -57,6 +56,7 @@ public class DBWorker {
         } catch (SQLException e) {
             System.out.println("Error!");
         }
+
         return car;
     }
 
@@ -64,9 +64,8 @@ public class DBWorker {
     private Engine getEngineById_Engine(int id_engine){
         Engine engine = new Engine(0, 0, 0);
 
-        try(Statement statement = connection.createStatement()) {
-            ResultSet res = statement.executeQuery(GET_ENGINE_BY_ID + id_engine);
-
+        try(Statement statement = connection.createStatement();
+            ResultSet res = statement.executeQuery(GET_ENGINE_BY_ID + id_engine)) {
             while(res.next()){
                 engine.setId(res.getInt(1));
                 engine.setDisplacement(res.getDouble(2));
@@ -83,7 +82,7 @@ public class DBWorker {
     public Engine getEngineById(int id){
         Engine engine;
 
-        engine = helpGetEngineById(id);//получаем engine по id
+        engine = justGetEngineById(id);//получаем engine по id
 
         engine.setSetCars(getCarByIdEngine(engine.getId()));//получаем set<Car> по id_engine
 
@@ -91,7 +90,7 @@ public class DBWorker {
     }
 
     //Вспомогательный метод. Получаем объект типа Engine по id. Вызывается из метода getEngineById
-    private Engine helpGetEngineById(int id){
+    private Engine justGetEngineById(int id){
         Engine engine = new Engine(0, 0, 0);
 
         try {
@@ -110,14 +109,15 @@ public class DBWorker {
 
     //Вспомогательный метод. Получаем список авто по id_engine. Метод вызывается из метода getEngineById
     private Set<Car> getCarByIdEngine(int id_engine){
-        Set<Car> setCars= new HashSet<>();
+        Set<Car> setCars = new HashSet<>();
         try{
             //получаем Car по id_engine
             resultSet = statement.executeQuery(GET_CAR_BY_ID_ENGINE + id_engine);
 
             while(resultSet.next()){
                 Car car = new Car(0, "", "", null, 0);//создаем новый объект типа Car
-                //заполняем его поля даннім из БД
+
+                //заполняем его поля данными из БД
                 car.setId(resultSet.getInt(1));
                 car.setModel(resultSet.getString(2));
                 car.setMake(resultSet.getString(3));
@@ -172,6 +172,10 @@ public class DBWorker {
         return resultSet;
     }
 
+    public void setResultSet(ResultSet resultSet) {
+        this.resultSet = resultSet;
+    }
+
     public Statement getStatement() {
         return statement;
     }
@@ -182,5 +186,9 @@ public class DBWorker {
 
     public PreparedStatement getPreparedStatement() {
         return preparedStatement;
+    }
+
+    public void setPreparedStatement(PreparedStatement preparedStatement) {
+        this.preparedStatement = preparedStatement;
     }
 }
