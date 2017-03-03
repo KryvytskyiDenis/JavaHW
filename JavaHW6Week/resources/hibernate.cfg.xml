@@ -1,0 +1,17 @@
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/javaHW6Week</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">1357</property>
+        <property name="connection.pool_size">1</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="show_sql">true</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
+
+        <mapping class="krivitskiy.model.Car"/>
+        <mapping class="krivitskiy.model.Mechanic"/>
+        <mapping class="krivitskiy.model.ServiceStation"/>
+
+    </session-factory>
+</hibernate-configuration>
