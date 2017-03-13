@@ -1,0 +1,9 @@
+krivitskiy\dao\StudentDAOImpl.class
+krivitskiy\model\Student.class
+krivitskiy\util\HibernateUtil.class
+krivitskiy\servlets\StudentUpdateServlet.class
+krivitskiy\test.class
+krivitskiy\servlets\StudentDeleteServlet.class
+krivitskiy\dao\StudentDAO.class
+krivitskiy\servlets\StudentCreateServlet.class
+krivitskiy\servlets\StudentViewServlet.class
